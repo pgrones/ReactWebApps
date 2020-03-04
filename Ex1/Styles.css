@@ -54,6 +54,7 @@ input:focus{
     outline: 0;
 }
 
+/*Disable the arrows in the input field*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
