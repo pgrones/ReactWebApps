@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "noEmit": false,
-    "composite": true
+    "noEmit": true
   },
   "include": [
     "src/**/*"
