@@ -1,5 +1,17 @@
-import sum from "./sum";
-import square from "./square";
+import {submit, validateInput} from "./form";
+import {onAddMessageClick, onMessageClick} from "./navigation";
 
-document.writeln('The sum of 5 and 8 is ', sum(5, 10).toString(), '<br>');
-document.writeln('The square of 6 is ', square(6).toString(), '<b>');
+export const messages = [];
+
+const messageBtn = document.getElementById("messageBtn");
+const newBtn = document.getElementById("newMessageBtn");
+const message = document.getElementById("message") as HTMLInputElement;
+const subject = document.getElementById("subject") as HTMLTextAreaElement;
+const form = document.getElementById("form");
+
+messageBtn.onclick = onMessageClick;
+newBtn.onclick = onAddMessageClick;
+message.onkeyup = validateInput;
+subject.onkeyup = validateInput;
+form.onsubmit = submit;
+
