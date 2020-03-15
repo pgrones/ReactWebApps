@@ -1,5 +1,8 @@
 import {messages} from "./main";
 
+/**
+ * Hides the form and opens the message page
+ */
 export function onMessageClick(): void {
     const form = document.getElementById("formContainer");
     form.style.display = "none";
@@ -7,6 +10,9 @@ export function onMessageClick(): void {
     messages.style.display = "flex";
 }
 
+/**
+ * Hides the messages and opens the form
+ */
 export function onAddMessageClick(): void {
     const form = document.getElementById("form") as HTMLFormElement;
     form.reset();
@@ -16,6 +22,9 @@ export function onAddMessageClick(): void {
     formContainer.style.display = "flex";
 }
 
+/**
+ * Updates the notification counter in the navigation bar
+ */
 export function updateNotification(): void {
     const notification = document.getElementById("notification") as HTMLSpanElement;
     let unread = 0;

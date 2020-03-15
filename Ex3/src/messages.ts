@@ -1,6 +1,9 @@
 import {messages} from "./main";
 import {updateNotification} from "./navigation";
 
+/**
+ * Updates the amount of unread messages on the message page
+ */
 export function updateAvailableMsg(): void {
     const availableMsg = document.getElementById("availableMsg");
     let unread = 0;
@@ -11,6 +14,10 @@ export function updateAvailableMsg(): void {
     availableMsg.textContent = (unread > 0 ? unread.toString() : "No") + " New Messages"
 }
 
+/**
+ * Marks a message as read, updating the notification counters and removing the click event
+ * @param event
+ */
 function markAsRead(event: MouseEvent): void {
     let div = event.target as HTMLDivElement;
     let id = div.id;
@@ -20,16 +27,21 @@ function markAsRead(event: MouseEvent): void {
     }
 
     div.className = "messages";
+    div.removeEventListener("click", markAsRead);
+    // The id of the div is the index of the message in the array
     messages[parseInt(id)].read = true;
 
     updateAvailableMsg();
     updateNotification()
 }
 
+/**
+ * Adds a new message to the message array as well as to the DOM
+ */
 export function addMessage(): void {
-    const container = document.getElementById("messageContainer");
-
     if (messages.length > 0) {
+        const container = document.getElementById("messageContainer");
+
         const subjectDiv = document.createElement("div");
         subjectDiv.textContent = "Subject: " + messages[messages.length - 1].subject;
 
@@ -41,8 +53,9 @@ export function addMessage(): void {
 
         message.append(subjectDiv, bodyDiv);
         container.appendChild(message);
+        // Setting the index of the message in the array as id of the div
         message.id = (messages.length - 1).toString();
-        message.onclick = markAsRead;
+        message.addEventListener("click", markAsRead);
         updateAvailableMsg();
     }
 }

@@ -1,6 +1,9 @@
 import {submit, validateInput} from "./form";
 import {onAddMessageClick, onMessageClick} from "./navigation";
 
+/**
+ * Sets up all listeners and holds all messages in an array
+ */
 export const messages = [];
 
 const messageBtn = document.getElementById("messageBtn");
