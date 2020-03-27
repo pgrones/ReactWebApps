@@ -3,22 +3,24 @@ import ReactDOM from 'react-dom';
 import './style.css';
 import {NavBar} from "./navBar";
 import {Form} from "./form";
-
-type Props = {
-    title: string;
-    unreadMessages: number;
-}
-
-const Header = (props: Props) => (
-    <div className="header">
-        <h1>{props.title}</h1>
-        <p>{props.unreadMessages} unread messages</p>
-    </div>
-);
+import {Messages} from "./messages";
 
 const App = () => {
     const [notificationAmount, setNotificationAmount] = useState(0);
-    const [isMessageView, setMessageView] = useState(true);
+    const [isMessageView, setMessageView] = useState(false);
+    const [messages, setMessages] = useState([]);
+
+    const addMessage = (message: { subject: string, body: string, read: boolean }) => {
+        setMessages([...messages, message]);
+        setNotificationAmount(notificationAmount + 1);
+    };
+
+    const markAsRead = (index: number) => {
+        let m = [...messages];
+        m[index].read = true;
+        setMessages(m);
+        setNotificationAmount(notificationAmount - 1);
+    };
 
     return (
         <>
@@ -26,8 +28,9 @@ const App = () => {
             <div className='main'>
                 <div className='content'>
                     {isMessageView ?
-                        <Header title="Hello !" unreadMessages={5}/> :
-                        <Form notificationAmount={notificationAmount} setNotificationAmount={setNotificationAmount}/>}
+                        <Messages messages={messages} notificationAmount={notificationAmount}
+                                  markAsRead={markAsRead}/> :
+                        <Form addMessage={addMessage}/>}
                 </div>
             </div>
         </>

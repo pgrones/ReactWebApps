@@ -2,7 +2,7 @@
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack -d -w",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .tsx",
     "typecheck": "tsc"
   },
   "devDependencies": {

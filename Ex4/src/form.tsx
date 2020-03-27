@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
 
 type Props = {
-    notificationAmount: number,
-    setNotificationAmount: Function
+    addMessage: Function
 }
 
 export const Form = (props: Props) => {
     const [subject, setSubject] = useState('');
     const [body, setBody] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: Event) => {
         e.preventDefault();
-        //TODO pass to app
+        props.addMessage({subject: subject, body: body, read: false});
         setSubject('');
         setBody('');
-        props.setNotificationAmount(props.notificationAmount + 1)
     };
 
     return (
