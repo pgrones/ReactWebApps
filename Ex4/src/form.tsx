@@ -16,24 +16,22 @@ export const Form = (props: Props) => {
     };
 
     return (
-        <>
-            <div className='formContainer'>
-                <h1>New Message</h1>
-                <form onSubmit={(e) => handleSubmit(e)}>
-                    <input
-                        type="text"
-                        name="subject"
-                        onChange={(e) => setSubject(e.target.value)}
-                        value={subject || ''}
-                    />
-                    <textarea
-                        name="body"
-                        onChange={(e) => setBody(e.target.value)}
-                        value={body || ''}
-                    />
-                    <button className='submit-btn' disabled={!(subject && body)}>Submit</button>
-                </form>
-            </div>
-        </>
+        <div className='formContainer'>
+            <h1>New Message</h1>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <input
+                    type="text"
+                    name="subject"
+                    onChange={(e) => setSubject(e.target.value)}
+                    value={subject || ''}
+                />
+                <textarea
+                    name="body"
+                    onChange={(e) => setBody(e.target.value)}
+                    value={body || ''}
+                />
+                <button className='submit-btn' disabled={!(subject && body)}>Submit</button>
+            </form>
+        </div>
     )
 };
