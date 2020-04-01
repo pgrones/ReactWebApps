@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Theme} from "../styles/colors";
+import {Theme} from "../styles/theme";
 
 type Props = {
     notificationAmount: number,

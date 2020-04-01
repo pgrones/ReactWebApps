@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import styled, {css} from 'styled-components'
-import {Theme} from "../styles/colors";
+import {Theme} from "../styles/theme";
 
 type Props = {
     addMessage: Function

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
-import {Theme} from "../styles/colors";
+import {Theme} from "../styles/theme";
 
 type Props = {
     messages: { subject: string, body: string, read: boolean }[],

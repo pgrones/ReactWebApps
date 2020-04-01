@@ -5,7 +5,7 @@ import {Form} from "./form";
 import {Messages} from "./messages";
 import styled, {ThemeProvider} from 'styled-components';
 import {GlobalStyle} from "../styles/globalStyle";
-import {darkTheme, lightTheme, Theme} from "../styles/colors";
+import {darkTheme, lightTheme, Theme} from "../styles/theme";
 
 const MainContainer = styled.main`
     position: absolute;
