@@ -44,19 +44,19 @@ const FormWrapper = (theme: Theme) => css`
 `;
 
 const Subject = styled.input`
-    ${(props: {theme: Theme}) => FormWrapper(props.theme)}
+    ${(props: { theme: Theme }) => FormWrapper(props.theme)}
 `;
 
 const Body = styled.textarea`
-    ${(props: {theme: Theme}) => FormWrapper(props.theme)};   
+    ${(props: { theme: Theme }) => FormWrapper(props.theme)};   
     height: 100%;
     min-height: 50%;
 `;
 
 const Button = styled.button`
-    background-color: ${(props: {theme: Theme}) => props.theme.accent};
+    background-color: ${(props: { theme: Theme }) => props.theme.accent};
     padding: 10px;
-    border: 1px solid ${(props: {theme: Theme}) => props.theme.background};
+    border: 1px solid ${(props: { theme: Theme }) => props.theme.background};
     border-radius: 10px;
     cursor: pointer;
     outline: none;
@@ -66,18 +66,18 @@ const Button = styled.button`
     width: 93%;
     
     &:hover{
-        background-color: ${(props: {theme: Theme}) => props.theme.background};
+        background-color: ${(props: { theme: Theme }) => props.theme.background};
         transform: scale(1.1);
     }
     
     &:disabled{
-        color: ${(props: {theme: Theme}) => props.theme.background};        
+        color: ${(props: { theme: Theme }) => props.theme.background};        
     }
     
     &:disabled:hover{
         transform: none;
         cursor: default;
-        background-color: ${(props: {theme: Theme}) => props.theme.accent};
+        background-color: ${(props: { theme: Theme }) => props.theme.accent};
     }
 `;
 

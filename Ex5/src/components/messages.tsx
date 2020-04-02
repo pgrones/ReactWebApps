@@ -4,7 +4,6 @@ import {Theme} from "../styles/theme";
 
 type Props = {
     messages: { subject: string, body: string, read: boolean }[],
-    notificationAmount: number,
     markAsRead: Function
 }
 
@@ -27,7 +26,7 @@ const NotificationText = styled.h2`
     font-size: 24px;
     font-weight: normal;
     color: #b5002a;
-    background-color: ${(props: {theme: Theme}) => props.theme.accentBetween};
+    background-color: ${(props: { theme: Theme }) => props.theme.accentBetween};
     border-radius: 10px;
     padding: 5px 10px;
     margin-bottom: 10px;
@@ -46,40 +45,44 @@ const Message = (theme: Theme) => css`
 `;
 
 const ReadMessage = styled.div`
-    ${(props: {theme: Theme}) => Message(props.theme)}
+    ${(props: { theme: Theme }) => Message(props.theme)}
 `;
 
 const UnreadMessage = styled.div`
-    ${({theme}) => Message(theme)};
-    background-color: ${(props: {theme: Theme}) => props.theme.accentBetween};
+    ${(props: { theme: Theme }) => Message(props.theme)};
+    background-color: ${(props: { theme: Theme }) => props.theme.accentBetween};
     cursor: pointer;
     transition: 0.2s linear;
     
     &:hover{
-        background-color: ${(props: {theme: Theme}) => props.theme.background};
+        background-color: ${(props: { theme: Theme }) => props.theme.background};
         transform: scale(1.05);
     }
 `;
 
-export const Messages = (props: Props) =>
-    <MessageContainer>
-        <Header>Messages</Header>
-        {props.messages.length > 0 &&
-        <>
-            {props.notificationAmount > 0 &&
-            <NotificationText>{props.notificationAmount} New
-                Message{props.notificationAmount > 1 && 's'}
-            </NotificationText>}
-            {props.messages.map((m, index) =>
-                !m.read ?
-                    <UnreadMessage key={index} onClick={() => props.markAsRead(index)}>
-                        Subject: {m.subject}<br/>Message: {m.body}
-                    </UnreadMessage>
-                    : <ReadMessage key={index}>
-                        Subject: {m.subject}<br/>Message: {m.body}
-                    </ReadMessage>)
+export const Messages = (props: Props) => {
+    const notifications = props.messages.filter(item => !item.read).length;
+
+    return (
+        <MessageContainer>
+            <Header>Messages</Header>
+            {props.messages.length > 0 &&
+            <>
+                {notifications > 0 &&
+                <NotificationText>{notifications} New
+                    Message{notifications > 1 && 's'}
+                </NotificationText>}
+                {props.messages.map((m, index) =>
+                    !m.read ?
+                        <UnreadMessage key={index} onClick={() => props.markAsRead(index)}>
+                            Subject: {m.subject}<br/>Message: {m.body}
+                        </UnreadMessage>
+                        : <ReadMessage key={index}>
+                            Subject: {m.subject}<br/>Message: {m.body}
+                        </ReadMessage>)
+                }
+            </>
             }
-        </>
-        }
-    </MessageContainer>
-;
+        </MessageContainer>
+    )
+};

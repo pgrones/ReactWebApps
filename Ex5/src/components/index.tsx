@@ -28,21 +28,18 @@ const Content = styled.div`
 `;
 
 const App = () => {
-    const [notificationAmount, setNotificationAmount] = useState(0);
     const [isMessageView, setMessageView] = useState(false);
     const [messages, setMessages] = useState([]);
     const [theme, setTheme] = useState(darkTheme);
 
     const addMessage = (message: { subject: string, body: string, read: boolean }) => {
         setMessages([...messages, message]);
-        setNotificationAmount(notificationAmount + 1);
     };
 
     const markAsRead = (index: number) => {
         let m = [...messages];
         m[index].read = true;
         setMessages(m);
-        setNotificationAmount(notificationAmount - 1);
     };
 
     const changeStyle = () => {
@@ -57,13 +54,12 @@ const App = () => {
         <>
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
-                <NavBar notificationAmount={notificationAmount} setMessageView={setMessageView}
+                <NavBar messages={messages} setMessageView={setMessageView}
                         changeStyle={changeStyle}/>
                 <MainContainer>
                     <Content>
                         {isMessageView ?
-                            <Messages messages={messages} notificationAmount={notificationAmount}
-                                      markAsRead={markAsRead}/>
+                            <Messages messages={messages} markAsRead={markAsRead}/>
                             : <Form addMessage={addMessage}/>}
                     </Content>
                 </MainContainer>

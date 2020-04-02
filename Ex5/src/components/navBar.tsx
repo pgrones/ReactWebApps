@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import {Theme} from "../styles/theme";
 
 type Props = {
-    notificationAmount: number,
+    messages: { subject: string, body: string, read: boolean }[],
     setMessageView: Function,
     changeStyle: Function
 }
 
 const Background = styled.div`
-    background-color: ${(props: {theme: Theme}) => props.theme.accent};
+    background-color: ${(props: { theme: Theme }) => props.theme.accent};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +28,7 @@ const NavBtn = styled.a`
     flex-direction: row;
     
     &:hover{
-        background-color: ${(props: {theme: Theme}) => props.theme.background};
+        background-color: ${(props: { theme: Theme }) => props.theme.background};
         transform: scale(1.1);
     }
 `;
@@ -36,7 +36,7 @@ const NavBtn = styled.a`
 const Notification = styled.span`
     margin-left: 5px;
     margin-top: -5px;
-    background-color: ${(props: {theme: Theme}) => props.theme.notificationColor};
+    background-color: ${(props: { theme: Theme }) => props.theme.notificationColor};
     border-radius: 50%;
     font-size: 14px;
     width: 15px;
@@ -45,14 +45,18 @@ const Notification = styled.span`
     text-align: center;
 `;
 
-export const NavBar = (props: Props) =>
-    <Background>
-        <NavBtn onClick={() => props.setMessageView(true)}>
-            Messages
-            {props.notificationAmount > 0 &&
-            <Notification>{props.notificationAmount > 5 ? '5+' : props.notificationAmount}</Notification>}
-        </NavBtn>
-        <NavBtn onClick={() => props.setMessageView(false)}>New Message</NavBtn>
-        <NavBtn onClick={() => props.changeStyle()}>Theme</NavBtn>
-    </Background>
-;
+export const NavBar = (props: Props) => {
+    const notifications = props.messages.filter(item => !item.read).length;
+
+    return (
+        <Background>
+            <NavBtn onClick={() => props.setMessageView(true)}>
+                Messages
+                {notifications > 0 &&
+                <Notification>{notifications > 5 ? '5+' : notifications}</Notification>}
+            </NavBtn>
+            <NavBtn onClick={() => props.setMessageView(false)}>New Message</NavBtn>
+            <NavBtn onClick={() => props.changeStyle()}>Theme</NavBtn>
+        </Background>
+    )
+};
