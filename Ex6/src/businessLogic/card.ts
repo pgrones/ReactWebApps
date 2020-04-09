@@ -1,8 +1,13 @@
+export type Img = {
+    path: string,
+    alt: string
+}
+
 export class Card {
-    suit: string;
+    suit: Img;
     value: string;
 
-    constructor(suit: string, value: string) {
+    constructor(suit: Img, value: string) {
         this.suit = suit;
         this.value = value;
     }

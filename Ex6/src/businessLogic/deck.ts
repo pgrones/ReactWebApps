@@ -1,12 +1,34 @@
-import {Card} from "./card";
+import {Card, Img} from "./card";
 
 export class Deck {
     cards: Array<Card>;
-    suits: Array<string>;
+    suits: Array<Img>;
 
     constructor() {
         this.cards = [];
-        this.suits = ['../../resources/diamonds.png', '../../resources/hearts.png', '../../resources/spades.png', '../../resources/clubs.png'];
+        const diamonds = require('../../resources/diamonds.png');
+        const hearts = require('../../resources/hearts.png');
+        const spades = require('../../resources/spades.png');
+        const clubs = require('../../resources/clubs.png');
+
+        this.suits = [
+            {
+                path: diamonds.default,
+                alt: 'diamonds'
+            },
+            {
+                path: hearts.default,
+                alt: 'hearts'
+            },
+            {
+                path: spades.default,
+                alt: 'spades'
+            },
+            {
+                path: clubs.default,
+                alt: 'clubs'
+            }
+        ];
 
         for (let j = 0; j < 4; j++) {
             for (let i = 1; i <= 13; i++) {

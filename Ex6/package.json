@@ -28,6 +28,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "file-loader": "^6.0.0",
     "react-card-flip": "^1.0.10"
   }
 }

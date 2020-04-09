@@ -74,14 +74,6 @@ const App = () => {
         sleep(1000).then(() => setScore(game.score))
     };
 
-    const handleLower = (): void => {
-        getNextCard('lower')
-    };
-
-    const handleHigher = (): void => {
-        getNextCard('higher')
-    };
-
     return (
         <>
             <GlobalStyle/>
@@ -89,8 +81,8 @@ const App = () => {
                 <h1>Score: {score}</h1>
                 <Deck isFlipped={isFlipped} card={card}/>
                 <ButtonWrapper>
-                    <StyledButton onClick={(): void => handleLower()} disabled={!card}>Lower</StyledButton>
-                    <StyledButton onClick={(): void => handleHigher()} disabled={!card}>Higher</StyledButton>
+                    <StyledButton onClick={(): void => getNextCard('lower')} disabled={!card}>Lower</StyledButton>
+                    <StyledButton onClick={(): void => getNextCard('higher')} disabled={!card}>Higher</StyledButton>
                 </ButtonWrapper>
             </Wrapper>
         </>

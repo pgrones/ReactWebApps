@@ -47,7 +47,7 @@ export const Deck = (props: Props) => {
                 <ReactCardFlip isFlipped={props.isFlipped} flipDirection="horizontal" infinite={true}
                                flipSpeedBackToFront={2} flipSpeedFrontToBack={2}>
                     <TopCard>
-                        {props.card ? <><img src={props.card.suit} width='40%' alt='Spades'/>
+                        {props.card ? <><img src={props.card.suit.path} width='40%' alt={props.card.suit.alt}/>
                         {props.card.value} </> : <></>}
                     </TopCard>
                     <TopCard/>
