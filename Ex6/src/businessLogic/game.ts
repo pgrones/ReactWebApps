@@ -19,18 +19,20 @@ export class Game {
         let lastCard = this.currentCard;
         this.currentCard = this.deck.card(this.index);
 
-        if(this.currentCard) {
-            if (prediction === 'higher') {
-                if (this.currentCard.valueAsNumber() > lastCard.valueAsNumber()) {
-                    this.score++;
-                }
-            } else {
-                if (this.currentCard.valueAsNumber() < lastCard.valueAsNumber()) {
-                    this.score++;
-                }
+        if (prediction === 'higher') {
+            if (this.currentCard.valueAsNumber() > lastCard.valueAsNumber()) {
+                this.score++;
+            }
+        } else {
+            if (this.currentCard.valueAsNumber() < lastCard.valueAsNumber()) {
+                this.score++;
             }
         }
     }
 
-
+    isOver(): boolean {
+        if (!this.deck.card(this.index + 1)) {
+            return true;
+        }
+    }
 }

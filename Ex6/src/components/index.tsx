@@ -57,6 +57,7 @@ const App = () => {
     const [isFlipped, setFlipped] = useState(false);
     const [card, setCard] = useState(game.currentCard);
     const [score, setScore] = useState(game.score);
+    const [gameOver, setGameOver] = useState(false);
 
     // Flips the card again, to be face-up
     useEffect(() => {
@@ -68,6 +69,9 @@ const App = () => {
     const getNextCard = (prediction: string): void => {
         setFlipped(!isFlipped);
         game.draw(prediction);
+        if (game.isOver()) {
+            setGameOver(true);
+        }
         // Not the best solution, but I wanted to set the state when the card is face-down
         // As this is not part of the exercise, imagine sleep() is never called
         sleep(300).then(() => setCard(game.currentCard));
@@ -81,8 +85,8 @@ const App = () => {
                 <h1>Score: {score}</h1>
                 <Deck isFlipped={isFlipped} card={card}/>
                 <ButtonWrapper>
-                    <StyledButton onClick={(): void => getNextCard('lower')} disabled={!card}>Lower</StyledButton>
-                    <StyledButton onClick={(): void => getNextCard('higher')} disabled={!card}>Higher</StyledButton>
+                    <StyledButton onClick={(): void => getNextCard('lower')} disabled={gameOver}>Lower</StyledButton>
+                    <StyledButton onClick={(): void => getNextCard('higher')} disabled={gameOver}>Higher</StyledButton>
                 </ButtonWrapper>
             </Wrapper>
         </>
