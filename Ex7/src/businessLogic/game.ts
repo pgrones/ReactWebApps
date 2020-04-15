@@ -1,11 +1,12 @@
 import {Deck} from "./deck";
 import {Card} from "./card";
+import {action, computed, observable} from 'mobx';
 
 export class Game {
     deck: Deck;
     index: number;
     score: number;
-    currentCard: Card;
+    @observable currentCard: Card;
 
     constructor() {
         this.deck = new Deck();
