@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import {GlobalStyle} from "../styles/globalStyle";
 import {Deck} from './deck'
 import {Game} from '../businessLogic/game'
+import {observer} from "mobx-react";
+import {autorun} from "mobx";
 
 const Wrapper = styled.div`
     height: 100vh;
@@ -47,50 +49,27 @@ const StyledButton = styled.button`
     }
 `;
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 const game = new Game();
 
-const App = () => {
-    const [isFlipped, setFlipped] = useState(false);
-    const [card, setCard] = useState(game.currentCard);
-    const [score, setScore] = useState(game.score);
-    const [gameOver, setGameOver] = useState(false);
+autorun(() => {
+    console.log('Card: ' + (game.index + 1) + '/52');
+    console.log('Score: ' + game.score);
+});
 
-    // Flips the card again, to be face-up
-    useEffect(() => {
-        if (isFlipped) {
-            setFlipped(!isFlipped);
-        }
-    }, [isFlipped]);
-
-    const getNextCard = (prediction: string): void => {
-        setFlipped(!isFlipped);
-        game.draw(prediction);
-        if (game.isOver()) {
-            setGameOver(true);
-        }
-        // Not the best solution, but I wanted to set the state when the card is face-down
-        // As this is not part of the exercise, imagine sleep() is never called
-        sleep(300).then(() => setCard(game.currentCard));
-        sleep(1000).then(() => setScore(game.score))
-    };
-
+const App = observer(() => {
     return (
         <>
             <GlobalStyle/>
             <Wrapper>
-                <h1>Score: {score}</h1>
-                <Deck isFlipped={isFlipped} card={card}/>
+                <h1>Score: {game.score}</h1>
+                <Deck card={game.currentCard}/>
                 <ButtonWrapper>
-                    <StyledButton onClick={(): void => getNextCard('lower')} disabled={gameOver}>Lower</StyledButton>
-                    <StyledButton onClick={(): void => getNextCard('higher')} disabled={gameOver}>Higher</StyledButton>
+                    <StyledButton onClick={(): void => game.draw('lower')} disabled={game.isOver()}>Lower</StyledButton>
+                    <StyledButton onClick={(): void => game.draw('higher')} disabled={game.isOver()}>Higher</StyledButton>
                 </ButtonWrapper>
             </Wrapper>
         </>
     )
-};
+});
 
 ReactDOM.render(<App/>, document.getElementById('root'));

@@ -1,11 +1,11 @@
 import {Deck} from "./deck";
 import {Card} from "./card";
-import {action, computed, observable} from 'mobx';
+import {action, observable} from 'mobx';
 
 export class Game {
     deck: Deck;
-    index: number;
-    score: number;
+    @observable index: number; // Only observable for autorun()
+    @observable score: number;
     @observable currentCard: Card;
 
     constructor() {
@@ -15,7 +15,7 @@ export class Game {
         this.currentCard = this.deck.card(this.index);
     }
 
-    draw(prediction: string): void {
+    @action draw(prediction: string): void {
         this.index++;
         let lastCard = this.currentCard;
         this.currentCard = this.deck.card(this.index);
@@ -31,7 +31,7 @@ export class Game {
         }
     }
 
-    isOver(): boolean {
+    @action isOver(): boolean {
         if (!this.deck.card(this.index + 1)) {
             return true;
         }

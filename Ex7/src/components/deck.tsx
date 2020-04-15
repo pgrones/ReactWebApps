@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import ReactCardFlip from 'react-card-flip';
 import {Card} from "../businessLogic/card";
 
 type Props = {
-    isFlipped: boolean,
     card: Card
 }
 
@@ -44,14 +42,10 @@ export const Deck = (props: Props) => {
     return (
         <Wrapper>
             <CardDiv>
-                <ReactCardFlip isFlipped={props.isFlipped} flipDirection="horizontal" infinite={true}
-                               flipSpeedBackToFront={2} flipSpeedFrontToBack={2}>
-                    <TopCard>
-                        {props.card ? <><img src={props.card.suit.path} width='40%' alt={props.card.suit.alt}/>
-                        {props.card.value} </> : <></>}
-                    </TopCard>
-                    <TopCard/>
-                </ReactCardFlip>
+                <TopCard>
+                    <img src={props.card.suit.path} width='40%' alt={props.card.suit.alt}/>
+                    {props.card.value}
+                </TopCard>
             </CardDiv>
         </Wrapper>
     )
