@@ -11,7 +11,7 @@ type Props = {
 const StyledAppBar = withStyles({
     root: {
         background: '#2a2f36',
-
+        boxShadow: '1px 3px 12px 5px #000'
     }
 })(AppBar);
 

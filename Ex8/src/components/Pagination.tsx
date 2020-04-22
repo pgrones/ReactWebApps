@@ -1,9 +1,9 @@
 import {NavigateBefore, NavigateNext} from "@material-ui/icons";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Button, Container, BottomNavigation, Input} from "@material-ui/core";
+import {Button, Container, BottomNavigation, TextField} from "@material-ui/core";
 
-type Props={
+type Props = {
     currentPage: number,
     totalPages: number,
     setCurrentPage: Function
@@ -20,6 +20,7 @@ const StyledNavigation = withStyles({
         position: 'fixed',
         bottom: 0,
         background: '#2a2f36',
+        boxShadow: '1px -3px 12px 5px #000'
     }
 })(BottomNavigation);
 
@@ -49,7 +50,6 @@ const StyledBottomNav = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         margin: 0,
-        maxWidth: '74%'
     }
 })(Container);
 
@@ -75,14 +75,28 @@ const StyledTextField = withStyles({
         maxWidth: 100,
         marginRight: 10
     }
-})(Input);
-
+})(TextField);
 
 export const Pagination = (props: Props) => {
+    const [page, setPage] = useState(props.currentPage + 1);
+
+    const changePage = (e: any) => {
+        if (e.key === 'Enter') {
+            if (!isNaN(page)) {
+                props.setCurrentPage(page - 1)
+            } else {
+                setPage(1);
+                props.setCurrentPage(0)
+            }
+        }
+    };
+
+    useEffect(() => {
+        setPage(props.currentPage + 1)
+    }, [props.currentPage]);
+
     return (
-        <StyledNavigation
-            value={props.currentPage + 1}
-        >
+        <StyledNavigation>
             <StyledButton
                 disabled={props.currentPage < 1}
                 onClick={() => props.setCurrentPage(props.currentPage - 1)}
@@ -90,10 +104,13 @@ export const Pagination = (props: Props) => {
                 <NavigateBefore/>
             </StyledButton>
             <StyledBottomNav>
-                <StyledTextField id="standard-number"
-                                 type="number"
-                                 value={(props.currentPage + 1)}
-                                 onChange={(e) => props.setCurrentPage(e.target.value)}
+                <StyledTextField
+                    id="standard-number"
+                    type="number"
+                    value={page ? page : ''}
+                    onKeyPress={(e) => changePage(e)}
+                    onBlur={() => changePage({key: 'Enter'})}
+                    onChange={(e) => setPage(parseInt(e.target.value))}
                 />
                 {' / ' + props.totalPages}
             </StyledBottomNav>

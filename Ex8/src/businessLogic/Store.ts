@@ -13,7 +13,7 @@ export class Store {
 
     @action fetchTrending(): void {
         console.log('fetch');
-        fetch(`https://api.giphy.com/v1/gifs/trending?api_key=kn71mgUatXNYkXv8boMUQDeUsF5kgACG&limit=9&offset=${this.currentPage * 9}`)
+        fetch(`https://api.giphy.com/v1/gifs/trending?api_key=kn71mgUatXNYkXv8boMUQDeUsF5kgACG&limit=12&offset=${this.currentPage * 12}`)
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
@@ -25,13 +25,12 @@ export class Store {
                     }
                 });
 
-                this.totalPages = parseInt((json.pagination.total_count / 9).toFixed(0));
+                this.totalPages = parseInt((json.pagination.total_count / 12).toFixed(0));
             });
     }
 
     @action setCurrentPage(page: number): void {
         this.currentPage = page;
-
         this.fetchTrending();
     }
 }
