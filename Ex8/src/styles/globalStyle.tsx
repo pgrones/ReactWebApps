@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     color: #dfe8f2;
     font-family: 'Segoe UI', sans-serif;
-    font-size: 24px;
+    font-size: 22px;
     }
 
     body {
@@ -16,8 +16,22 @@ export const GlobalStyle = createGlobalStyle`
     
     h1 {
         font-size: 30px;
-        font-weight: normal;
+        background: linear-gradient(90deg, #FE6B8B 30%, #FF8E53 90%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
+    
+    input[type=number], input[type=text]{
+        color: #dfe8f2;
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 22px;
+        text-align:right;  
+    }
+    
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    
     
     /*Scrollbar*/
     /* width */
