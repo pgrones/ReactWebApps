@@ -4,14 +4,21 @@ export const GlobalStyle = createGlobalStyle`
     * {
     margin: 0;
     padding: 0;
-    color: #dfe8f2;
     font-family: 'Segoe UI', sans-serif;
     font-size: 22px;
     }
+    
+    html {
+    overflow-y:scroll;
+}
 
     body {
         background-color: #4e5663;
         height: 100vh;
+    }
+    
+    text, div{
+      color: #dfe8f2;
     }
     
     h1 {
@@ -21,17 +28,41 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-text-fill-color: transparent;
     }
     
+    h1:hover{
+    cursor: pointer;
+    }
+    
     input[type=number], input[type=text]{
         color: #dfe8f2;
         font-family: 'Segoe UI', sans-serif;
-        font-size: 22px;
-        text-align:right;  
+        font-size: 22px;      
+    }
+    
+    input[type=number]{
+    text-align:right; 
     }
     
     input[type=number]::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
     
+     .example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
     
     /*Scrollbar*/
     /* width */

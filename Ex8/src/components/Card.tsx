@@ -13,7 +13,8 @@ const StyledCard = withStyles({
         width: 500,
         background: 'linear-gradient(70deg, #FE6B8B 30%, #FF8E53 90%)',
         margin: 10,
-        boxShadow: '-4px 8px 15px 2px #2a2f36'
+        boxShadow: '-4px 8px 15px 2px #2a2f36',
+        transition: 'opacity 1s ease-in-out'
     }
 })(Card);
 
@@ -32,7 +33,7 @@ export const CardComponent = (props: Props) =>{
                 />
                 <CardContent>
                     <Typography gutterBottom variant="body2">
-                        {props.title}
+                        {props.title ? props.title : 'Untitled'}
                     </Typography>
                 </CardContent>
         </StyledCard>

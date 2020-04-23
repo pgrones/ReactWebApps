@@ -1,7 +1,7 @@
 import {CardComponent} from "./Card";
 import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Container} from "@material-ui/core";
+import {Container, Fade} from "@material-ui/core";
 
 type Props = {
     gifs: {
@@ -24,12 +24,12 @@ const StyledContainer = withStyles({
 
 export const ContainerComponent = (props: Props) => {
     return (
-        <>
+        <Fade in={true} timeout={800} addEndListener={() =>{}}>
             <StyledContainer>
                 {props.gifs.map((item, index) =>
                     <CardComponent key={index} title={item.title} url={item.url}/>
                 )}
             </StyledContainer>
-        </>
+        </Fade>
     )
 };

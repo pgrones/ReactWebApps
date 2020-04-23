@@ -55,30 +55,27 @@ const StyledBottomNav = withStyles({
 
 const StyledTextField = withStyles({
     root: {
-        '& label.Mui-focused': {
-            color: '#fafafa',
+        '& .MuiInput-underline:hover:before': {
+            borderBottomColor: '#FF8E53',
+        },
+        '& .MuiInput-underline:before': {
+            borderBottomColor: '#FE6B8B',
         },
         '& .MuiInput-underline:after': {
-            borderBottomColor: '#fafafa',
-        },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: '#fafafa',
-            },
-            '&:hover fieldset': {
-                borderColor: '#fafafa',
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: '#fafafa',
-            },
+            borderBottomColor: '#FE6B8B',
         },
         maxWidth: 100,
-        marginRight: 10
     }
 })(TextField);
 
 export const Pagination = (props: Props) => {
     const [page, setPage] = useState(props.currentPage + 1);
+
+    const writePage = (page: number) => {
+        if (page <= props.totalPages || isNaN(page)) {
+            setPage(page);
+        }
+    };
 
     const changePage = (e: any) => {
         if (e.key === 'Enter') {
@@ -107,15 +104,16 @@ export const Pagination = (props: Props) => {
                 <StyledTextField
                     id="standard-number"
                     type="number"
-                    value={page ? page : ''}
+                    value={props.totalPages > 0 ? page ? page : '' : 0}
+                    disabled={props.totalPages < 2}
                     onKeyPress={(e) => changePage(e)}
                     onBlur={() => changePage({key: 'Enter'})}
-                    onChange={(e) => setPage(parseInt(e.target.value))}
+                    onChange={(e) => writePage(parseInt(e.target.value))}
                 />
                 {' / ' + props.totalPages}
             </StyledBottomNav>
             <StyledButton
-                disabled={props.currentPage === props.totalPages}
+                disabled={props.currentPage + 1 === props.totalPages}
                 onClick={() => props.setCurrentPage(props.currentPage + 1)}
             >
                 <NavigateNext/>
