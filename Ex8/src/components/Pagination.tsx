@@ -1,28 +1,24 @@
 import {NavigateBefore, NavigateNext} from "@material-ui/icons";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {BottomNavigation, Button, Container, TextField} from "@material-ui/core";
-
-type Props = {
-    currentPage: number,
-    totalPages: number,
-    setCurrentPage: Function
-}
+import {Button, Container, TextField} from "@material-ui/core";
+import {useStore} from "../businessLogic/StoreContext";
+import {observer} from "mobx-react";
 
 const StyledNavigation = withStyles({
     root: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 30,
         minHeight: 80,
         width: '100%',
+        maxWidth: '100%',
         position: 'fixed',
         bottom: 0,
         background: '#2a2f36',
         boxShadow: '1px -3px 12px 5px #000'
     }
-})(BottomNavigation);
+})(Container);
 
 const StyledButton = withStyles({
     root: {
@@ -31,6 +27,8 @@ const StyledButton = withStyles({
         border: 0,
         color: 'white',
         height: 48,
+        marginLeft: 20,
+        marginRight: 20,
         padding: '0 20px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     },
@@ -64,39 +62,47 @@ const StyledTextField = withStyles({
         '& .MuiInput-underline:after': {
             borderBottomColor: '#FE6B8B',
         },
-        maxWidth: 100,
+        maxWidth: 80,
+        marginRight: 8
     }
 })(TextField);
 
-export const Pagination = (props: Props) => {
-    const [page, setPage] = useState(props.currentPage + 1);
+const WaterMarkContainer = withStyles({
+    root: {
+        position: 'absolute',
+        bottom: 100,
+        right: -20,
+        textAlign: 'right'
+    }
+})(Container);
 
-    const writePage = (page: number) => {
-        if (page <= props.totalPages || isNaN(page)) {
-            setPage(page);
+export const Pagination = observer(() => {
+    const store = useStore();
+
+    // Set the page and fetch the results
+    // If the page is too large or empty, -1 is passed as page
+    const setPage = (page: number) => {
+        if (!isNaN(page) && page >= 0 && page < store.totalPages) {
+            store.setCurrentPage(page);
+            store.fetch();
+        } else {
+            store.setCurrentPage(-1);
         }
     };
 
-    const changePage = (e: any) => {
-        if (e.key === 'Enter') {
-            if (!isNaN(page)) {
-                props.setCurrentPage(page - 1)
-            } else {
-                setPage(1);
-                props.setCurrentPage(0)
-            }
+    // Set the page back to 0 if the field loses focus and is empty
+    const onBlur = () => {
+        if (store.currentPage === -1) {
+            store.setCurrentPage(0);
+            store.fetch();
         }
     };
-
-    useEffect(() => {
-        setPage(props.currentPage + 1)
-    }, [props.currentPage]);
 
     return (
         <StyledNavigation>
             <StyledButton
-                disabled={props.currentPage < 1}
-                onClick={() => props.setCurrentPage(props.currentPage - 1)}
+                disabled={store.currentPage < 1 || store.totalPages <= 1}
+                onClick={() => setPage(store.currentPage - 1)}
             >
                 <NavigateBefore/>
             </StyledButton>
@@ -104,20 +110,23 @@ export const Pagination = (props: Props) => {
                 <StyledTextField
                     id="standard-number"
                     type="number"
-                    value={props.totalPages > 0 ? page ? page : '' : 0}
-                    disabled={props.totalPages < 2}
-                    onKeyPress={(e) => changePage(e)}
-                    onBlur={() => changePage({key: 'Enter'})}
-                    onChange={(e) => writePage(parseInt(e.target.value))}
+                    value={store.getCurrentPage}
+                    inputProps={{min: "0"}}
+                    disabled={store.totalPages < 2}
+                    onBlur={() => onBlur()}
+                    onChange={(e) => setPage(parseInt(e.target.value) - 1)}
                 />
-                {' / ' + props.totalPages}
+                {' / ' + store.totalPages}
             </StyledBottomNav>
             <StyledButton
-                disabled={props.currentPage + 1 === props.totalPages}
-                onClick={() => props.setCurrentPage(props.currentPage + 1)}
+                disabled={store.currentPage + 1 >= store.totalPages}
+                onClick={() => setPage(store.currentPage + 1)}
             >
                 <NavigateNext/>
             </StyledButton>
+            <WaterMarkContainer>
+                Powered By GIPHY
+            </WaterMarkContainer>
         </StyledNavigation>
     )
-};
+});

@@ -3,31 +3,22 @@ import ReactDOM from 'react-dom';
 import {GlobalStyle} from "../styles/GlobalStyle";
 import {NavBar} from "./NavBar";
 import {ContainerComponent} from "./Container"
-import {Store} from "../businessLogic/Store"
+import {useStore} from "../businessLogic/StoreContext"
 import {observer} from "mobx-react";
 import {Pagination} from "./Pagination";
 import {LoadingScreen} from "./LoadingScreen";
 
-const store = new Store();
-
 const App = observer(() => {
-    const setCurrentPage = (page: number) => {
-        store.setCurrentPage(page);
-    };
+    const store = useStore();
 
-    const setScreen = (screen: string) => {
-        store.setScreen(screen);
-    };
-
-    const fetchSearch = (input: string) => {
-        store.setSearchString(input);
-        store.fetchSearch()
-    };
-
+    // Fetch trending gifs on initial load
     useEffect(() => {
-        store.fetchTrending();
-    }, []);
+        if(store.screen === 'Trending') {
+            store.fetch();
+        }
+    }, [store.screen]);
 
+    // Scroll to the top when page changes
     useEffect(() => {
         window.scroll({top: 0, left: 0, behavior: 'smooth'})
     }, [store.currentPage]);
@@ -35,16 +26,12 @@ const App = observer(() => {
     return (
         <>
             <GlobalStyle/>
-            <NavBar screen={store.screen} setScreen={setScreen} setPage={setCurrentPage} fetchSearch={fetchSearch}/>
+            <NavBar/>
             {store.loading ?
-                <LoadingScreen/> :
+                <LoadingScreen error={store.error}/> :
                 <ContainerComponent gifs={store.gifs}/>
             }
-            <Pagination
-                currentPage={store.currentPage}
-                totalPages={store.totalPages}
-                setCurrentPage={setCurrentPage}
-            />
+            <Pagination/>
         </>
     )
 });

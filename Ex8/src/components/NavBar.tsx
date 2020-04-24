@@ -1,14 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Search, TrendingUp} from '@material-ui/icons';
 import {AppBar, Button, Slide, TextField, Toolbar, Tooltip} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
-
-type Props = {
-    screen: string,
-    setScreen: Function,
-    setPage: Function,
-    fetchSearch: Function
-};
+import {observer} from "mobx-react";
+import {useStore} from "../businessLogic/StoreContext";
 
 const StyledAppBar = withStyles({
     root: {
@@ -61,44 +56,52 @@ const StyledTextField = withStyles({
     }
 })(TextField);
 
-export const NavBar = (props: Props) => {
-    const [value, setValue] = useState('');
+export const NavBar = observer(() => {
+    const store = useStore();
     const ref = useRef<HTMLInputElement>();
 
+    // Empty and focus the search field on screen change
     useEffect(() => {
-        if (props.screen !== 'Trending') {
-            setValue('');
+        if (store.screen !== 'Trending') {
+            store.search('');
             ref.current.focus();
         }
-    }, [props.screen]);
+    }, [store.screen]);
 
     return (
         <StyledAppBar position="fixed">
             <StyledToolBar>
                 <div>
-                    <h1 onClick={() => props.setPage(0)}>{props.screen}</h1>
+                    {/*A click on the screen name at the top left loads the first page*/}
+                    <h1 onClick={() => {
+                        if (store.currentPage > 0) {
+                            store.setCurrentPage(0);
+                            store.fetch();
+                        }
+                    }}>
+                        {store.screen}
+                    </h1>
                 </div>
-                <Slide direction={'left'} in={props.screen !== 'Trending'}>
+                <Slide direction={'left'} in={store.screen !== 'Trending'}>
                     <StyledTextField
                         inputRef={ref}
                         id="standard"
                         type="text"
                         placeholder={'Search...'}
-                        value={value}
+                        value={store.searchString}
                         onChange={(e) => {
-                            setValue(e.target.value);
-                            props.fetchSearch(e.target.value);
+                            store.search(e.target.value);
                         }}
                     />
                 </Slide>
                 <div>
                     <Tooltip title="Trending">
-                        <StyledButton onClick={() => props.setScreen('Trending')}>
+                        <StyledButton onClick={() => store.setScreen('Trending')}>
                             <TrendingUp/>
                         </StyledButton>
                     </Tooltip>
                     <Tooltip title="Search">
-                        <StyledButton onClick={() => props.setScreen('Search')}>
+                        <StyledButton onClick={() => store.setScreen('Search')}>
                             <Search/>
                         </StyledButton>
                     </Tooltip>
@@ -106,4 +109,4 @@ export const NavBar = (props: Props) => {
             </StyledToolBar>
         </StyledAppBar>
     )
-};
+});

@@ -2,6 +2,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {CircularProgress, Container} from "@material-ui/core";
 import React from 'react';
 
+type Props = {
+    error: boolean
+}
+
 const StyledContainer = withStyles({
     root: {
         display: 'flex',
@@ -17,11 +21,13 @@ const StyledProgress = withStyles({
     }
 })(CircularProgress);
 
-export const LoadingScreen = () =>{
-
-    return(
+export const LoadingScreen = ({error}: Props) => {
+    return (
         <StyledContainer>
-            <StyledProgress />
+            {error ?
+                <div>An error occurred while fetching. Please reload the page.</div>
+                : <StyledProgress/>
+            }
         </StyledContainer>
     )
 };

@@ -6,10 +6,11 @@ type Props ={
     title: string,
     url: string,
 };
+
 const StyledCard = withStyles({
     root: {
         minHeight: 180,
-        maxHeight: 360,
+        maxHeight: 365,
         width: 500,
         background: 'linear-gradient(70deg, #FE6B8B 30%, #FF8E53 90%)',
         margin: 10,
@@ -24,16 +25,16 @@ const StyledMedia = withStyles({
     }
 })(CardMedia);
 
-export const CardComponent = (props: Props) =>{
+export const CardComponent = ({url, title}: Props) =>{
     return(
         <StyledCard>
                 <StyledMedia
-                    image={props.url}
-                    title={props.title}
+                    image={url}
+                    title={title}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="body2">
-                        {props.title ? props.title : 'Untitled'}
+                    <Typography variant="body2">
+                        {(title && title.trim().length) ? title : 'Untitled'}
                     </Typography>
                 </CardContent>
         </StyledCard>
