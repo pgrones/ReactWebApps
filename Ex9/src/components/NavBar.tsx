@@ -38,7 +38,7 @@ export const NavBar = () => {
                 <StyledLocaleContainer>
                     Locale
                     <StyledComboBox
-                        id="combo-box"
+                        id="locale-combo-box"
                         value={locale}
                         onChange={(e, newValue) => {
                             history.push(`${location.pathname}?locale=${newValue}`)

@@ -39,5 +39,9 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-appearance: none;
     display: none;
 }
+
+input[type=date]::-webkit-clear-button {
+    display: none;
+}
     
 `;

@@ -31,7 +31,7 @@ export const Text = () => {
                     <StyledTextField type="number" value={value}
                                      onChange={(e) => setValue(parseInt(e.target.value) >= 0 ? e.target.value : '0')}/>
                     <StyledComboBox
-                        id="combo-box"
+                        id="gender-combo-box"
                         value={gender}
                         onChange={(e, newValue) => {
                             setGender(newValue);
