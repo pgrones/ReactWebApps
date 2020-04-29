@@ -1,6 +1,6 @@
 import {createGlobalStyle} from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
     * {
     margin: 0;
     padding: 0;
@@ -13,8 +13,12 @@ export const GlobalStyle = createGlobalStyle`
         height: 100vh;
     }
     
-    text, div{
+    text, div, a{
       color: #dfe8f2;
+    }
+    
+    a{
+       text-decoration: none;
     }
     
     h1 {
@@ -24,21 +28,16 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-text-fill-color: transparent;
     }
     
-    h1:hover{
-    cursor: pointer;
-    }
-    
-    input[type=number], input[type=text]{
+    input[type=number], input[type=text], input[type=date]{
         color: #dfe8f2;
         font-family: 'Segoe UI', sans-serif;
-        font-size: 22px;      
+        font-size: 22px;    
+        text-align:center;   
     }
     
-    input[type=number]{
-    text-align:right; 
-    }
+    input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
     
-    input[type=number]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }  
 `;

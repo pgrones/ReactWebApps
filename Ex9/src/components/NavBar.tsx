@@ -1,131 +1,55 @@
 import React from 'react';
-import {AppBar, Button, Container, TextField, Toolbar, Tooltip} from "@material-ui/core";
-import {Autocomplete} from '@material-ui/lab';
-import withStyles from "@material-ui/core/styles/withStyles";
-
-const StyledAppBar = withStyles({
-    root: {
-        background: '#2a2f36',
-        boxShadow: '1px 3px 12px 5px #000'
-    }
-})(AppBar);
-
-const StyledToolBar = withStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        minHeight: 80,
-        margin: '0 50px 0 30px'
-    }
-})(Toolbar);
-
-const StyledButton = withStyles({
-    root: {
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        borderRadius: 5,
-        border: 0,
-        color: 'white',
-        height: 48,
-        padding: '0 20px',
-        marginRight: 10,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-    label: {
-        textTransform: 'none',
-    },
-})(Button);
-
-const StyledTextField = withStyles({
-    root: {
-        backgroundColor: '#4e5663',
-        minWidth: 70,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderRadius: 5,
-        '& .MuiInput-underline:hover:before': {
-            borderBottomColor: '#FF8E53',
-        },
-        '& .MuiInput-underline:before': {
-            borderBottomColor: '#FE6B8B',
-        },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: '#FE6B8B',
-        },
-    }
-})(TextField);
-
-const StyledComboBox = withStyles({
-    root: {
-        marginLeft: 10,
-        '& .MuiIconButton-root': {
-            color: '#FE6B8B'
-        }
-    }
-})(Autocomplete);
-
-const StyledButtonContainer = withStyles({
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-start'
-    }
-})(Container);
-
-const StyledLocaleContainer = withStyles({
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end'
-    }
-})(Container);
+import {Link, useLocation, useHistory} from 'react-router-dom'
+import {getLocale} from "./Index";
+import {
+    StyledAppBar, StyledButton, StyledButtonContainer, StyledComboBox, StyledHeaderContainer,
+    StyledLocaleContainer, StyledTextField, StyledToolBar
+} from "../styles/NavBarStyles";
 
 export const NavBar = () => {
-    const [value, setValue] = React.useState(locales[0]);
+    const history = useHistory();
+    const location = useLocation();
+    const locale = getLocale(location);
+
+    // Uses the url to set the right header
+    const getLocation = (): string => {
+        return location.pathname.length > 1 ?
+            location.pathname.substring(1)[0].toUpperCase() + location.pathname.slice(2)
+            : 'i18n'
+    };
 
     return (
         <StyledAppBar position="fixed">
             <StyledToolBar>
+                <StyledHeaderContainer>
+                    <h1>{getLocation()}</h1>
+                </StyledHeaderContainer>
                 <StyledButtonContainer>
-                    <Tooltip title="Numbers">
-                        <StyledButton onClick={() => {
-                        }}>
-                            Numbers
-                        </StyledButton>
-                    </Tooltip>
-                    <Tooltip title="Dates">
-                        <StyledButton onClick={() => {
-                        }}>
-                            Dates
-                        </StyledButton>
-                    </Tooltip>
-                    <Tooltip title="Text">
-                        <StyledButton onClick={() => {
-                        }}>
-                            Text
-                        </StyledButton>
-                    </Tooltip>
+                    <Link to={{pathname: "/numbers", search: "?locale=" + locale}}>
+                        <StyledButton>Numbers</StyledButton>
+                    </Link>
+                    <Link to={{pathname: "/dates", search: "?locale=" + locale}}>
+                        <StyledButton>Dates</StyledButton>
+                    </Link>
+                    <Link to={{pathname: "/text", search: "?locale=" + locale}}>
+                        <StyledButton>Text</StyledButton>
+                    </Link>
                 </StyledButtonContainer>
                 <StyledLocaleContainer>
                     Locale
                     <StyledComboBox
                         id="combo-box"
-                        value={value}
+                        value={locale}
                         onChange={(e, newValue) => {
-                            setValue(newValue);
+                            history.push(`${location.pathname}?locale=${newValue}`)
                         }}
                         disableClearable={true}
-                        options={locales}
+                        options={['en', 'de', 'ja']}
                         style={{width: 70}}
-                        renderInput={(params) => <StyledTextField {...params} value={'en'}/>}
+                        renderInput={(params) => <StyledTextField {...params}/>}
                     />
                 </StyledLocaleContainer>
             </StyledToolBar>
         </StyledAppBar>
     )
 };
-
-const locales = [
-    'en',
-    'de',
-    'zu'
-];
