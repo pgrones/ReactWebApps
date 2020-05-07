@@ -3,6 +3,7 @@
     "build": "webpack -p",
     "watch": "webpack -d -w",
     "start": "webpack-dev-server",
+    "test": "jest",
     "lint": "eslint . --ext .tsx",
     "typecheck": "tsc"
   },
@@ -19,15 +20,13 @@
     "eslint-plugin-react": "^7.19.0",
     "html-loader": "^1.0.0",
     "html-webpack-plugin": "^4.0.1",
+    "jest": "^26.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "typescript": "^3.7.5",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.3",
-    "file-loader": "^6.0.0"
-  },
-  "dependencies": {
-    "@material-ui/core": "^4.9.11"
+    "@jest/globals": "^26.0.1"
   }
 }
