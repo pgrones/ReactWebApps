@@ -12,7 +12,7 @@ export const Pagination = ({totalPages, page, setPage}: Props) => {
             <button style={{width: 40, height: 40, marginLeft: 400}} disabled={page === 1} onClick={() => setPage(page - 1)} id={'prev'}>
                 {'<'}
             </button>
-            <span style={{fontSize: 30, fontFamily: 'Arial', marginLeft: 100, marginRight: 100}} id={'page'}>
+            <span style={{fontSize: 30, fontFamily: 'Arial', marginLeft: 100, marginRight: 100, minWidth: 100}} id={'page'}>
                 {page + ' / ' + totalPages}
             </span>
             <button style={{width: 40, height: 40, marginRight: 400}} disabled={page === totalPages} onClick={() => setPage(page + 1)} id={'next'}>

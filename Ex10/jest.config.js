@@ -2,7 +2,7 @@ module.exports = {
     roots: [
         '<rootDir>/src/tests'
     ],
-    testRegex: 'Tests.jsx$',
+    testRegex: 'Tests.tsx$',
     moduleFileExtensions: [
         'ts',
         'tsx',

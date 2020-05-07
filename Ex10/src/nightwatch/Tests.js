@@ -1,15 +1,46 @@
 module.exports = {
-    'Demo test ecosia.org' : function (browser) {
+    'Browser Test': function (browser) {
         browser
-            .url('https://www.ecosia.org/')
+            .url('http://localhost:8080')
             .waitForElementVisible('body')
-            .assert.titleContains('Ecosia')
-            .assert.visible('input[type=search]')
-            .setValue('input[type=search]', 'nightwatch')
-            .assert.visible('button[type=submit]')
-            .click('.icon-button__icon-close')
-            .click('button[type=submit]')
-            .assert.containsText('.mainline-results', 'Nightwatch.js')
+            .assert.titleContains('Ex10')
+            .assert.visible('#page')
+            .assert.containsText('#page', '1 / 10')
+            .assert.visible('#wrapper')
+            .end();
+    },
+    'Next Test': function (browser) {
+        browser
+            .url('http://localhost:8080')
+            .waitForElementVisible('button')
+            .assert.visible('#next')
+            .click('#next')
+            .assert.containsText('#page', '2 / 10')
+            .end();
+    },
+    'Prev Test': function (browser) {
+        browser
+            .url('http://localhost:8080')
+            .waitForElementVisible('button')
+            .assert.visible('#prev')
+            .assert.visible('#page')
+            .assert.containsText('#page', '1 / 10')
+            .click('#prev')
+            .assert.containsText('#page', '1 / 10')
+            .end();
+    },
+    'Next Then Prev Test': function (browser) {
+        browser
+            .url('http://localhost:8080')
+            .waitForElementVisible('button')
+            .assert.visible('#prev')
+            .assert.visible('#next')
+            .click('#prev')
+            .assert.containsText('#page', '1 / 10')
+            .click('#next')
+            .assert.containsText('#page', '2 / 10')
+            .click('#prev')
+            .assert.containsText('#page', '1 / 10')
             .end();
     }
 };
