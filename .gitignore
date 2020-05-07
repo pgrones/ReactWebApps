@@ -4,3 +4,6 @@ node_modules/
 lib
 main.js
 dist/
+chromedriver.log
+coverage/
+test_output/

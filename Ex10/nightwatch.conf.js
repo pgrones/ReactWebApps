@@ -1,5 +1,5 @@
 module.exports = {
-    "src_folders" : ["nw_tests"],
+    "src_folders" : ["src\\nightwatch"],
 
     "webdriver" : {
         "start_process": true,
@@ -10,14 +10,7 @@ module.exports = {
     "test_settings" : {
         "default" : {
             "desiredCapabilities": {
-                "browserName": "chrome",
-                "chromeOptions": {
-                    "args": [
-                        "--headless",
-                        "--no-sandbox",
-                        "--disable-gpu"
-                    ]
-                }
+                "browserName": "chrome"
             }
         }
     }

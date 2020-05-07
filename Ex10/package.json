@@ -3,6 +3,7 @@
     "build": "webpack -p",
     "watch": "webpack -d -w",
     "start": "webpack-dev-server",
+    "browsertest": "nightwatch",
     "test": "jest --coverage",
     "lint": "eslint . --ext .tsx",
     "typecheck": "tsc"
