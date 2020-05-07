@@ -2,7 +2,7 @@ module.exports = {
     roots: [
         '<rootDir>/src/tests'
     ],
-    testRegex: 'Tests.js$',
+    testRegex: 'Tests.jsx$',
     moduleFileExtensions: [
         'ts',
         'tsx',
@@ -16,5 +16,6 @@ module.exports = {
         'src/**/*.{ts,tsx}',
         '!src/**/index.tsx',
     ],
-    testURL: 'http://localhost/'
+    testURL: 'http://localhost/',
+    setupFilesAfterEnv: ["<rootDir>/setupTests.js"]
 }
